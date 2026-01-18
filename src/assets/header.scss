@@ -1,0 +1,56 @@
+.header_fon {
+  width: 100dvw;
+  height: clamp(0px, calc((71 / 832) * 100dvh), 71px);
+  background-color: #853cff;
+  display: flex;
+  font-weight: 500;
+  font-size: clamp(10px, calc(20 / 1280 * 100dvw), 20px);
+  line-height: 120%;
+  letter-spacing: clamp(0.1px, calc(20 / 100 / 1280 * 100dvw), 0.2px);
+}
+
+.header {
+  width: clamp(0px, calc((1224 / 1280) * 100dvw), 1224px);
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+#logo_header {
+  width: clamp(0px, calc((123 / 1280) * 100dvw), 123px);
+  height: clamp(0px, calc((50 / 832) * 100dvh), 50px);
+}
+
+.header_nav {
+  display: flex;
+  gap: clamp(0px, calc((30 / 1280) * 100dvw), 30px);
+  height: clamp(0px, calc((50 / 832) * 100dvh), 50px);
+  margin-left: auto;
+  align-items: center;
+}
+
+.header_nav > div {
+  color: #ffffff;
+  cursor: pointer;
+   display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.header_nav_organization_settings >img  {
+        width: clamp(0px, calc((16 / 1280) * 100dvw), 16px);
+        height: clamp(0px, calc((9 / 832) * 100dvh), 9px);
+        margin-left: clamp(0px, calc((5 / 1280) * 100dvw), 5px);
+    }
+
+    .header_nav_photo{
+      width: clamp(0px, calc((50 / 1280) * 100dvw), 50px);
+        height: clamp(0px, calc((50 / 832) * 100dvh), 50px);
+    }
+    .header_nav_photo > img{
+      width: clamp(0px, calc((50 / 1280) * 100dvw), 50px);
+        height: clamp(0px, calc((50 / 832) * 100dvh), 50px);
+        border-radius: 50%;
+  object-fit: cover;
+    }
