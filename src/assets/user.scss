@@ -1,0 +1,112 @@
+.user{
+    width: clamp(0px, calc(1056 / 1280 * 100dvw), 1056px);
+  margin:0 auto;
+}
+
+.user_form {
+  margin-top: clamp(0px, calc(25 / 832 * 100dvh), 25px);
+
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+
+  font-size: clamp(10px, calc(16 / 1280 * 100dvw), 16px);
+  letter-spacing: clamp(
+    0.1px,
+    calc(16 / 100 / 1280 * 100dvw),
+    0.16px
+  );
+
+  width: clamp(0px, calc(575 / 1280 * 100dvw), 575px);
+}
+
+.user_form_input_group {
+  margin-top: clamp(0px, calc(10 / 832 * 100dvh), 10px);
+
+  display: flex;
+  align-items: center;
+
+  height: clamp(0px, calc(42 / 832 * 100dvh), 42px);
+  width: clamp(0px, calc(575 / 1280 * 100dvw), 575px);
+}
+
+.user_form_input_group_button {
+  color: #6AB23D;
+  cursor: pointer;
+
+  margin-left: clamp(0px, calc(118 / 1280 * 100dvw), 118px);
+}
+
+.user_form_input_group > textarea {
+  width: clamp(0px, calc(378 / 1280 * 100dvw), 378px);
+  height: clamp(0px, calc(42 / 832 * 100dvh), 42px);
+
+  border-radius: clamp(0px, calc(8 / 1280 * 100dvw), 8px);
+  border: clamp(0px, calc(1.5 / 1280 * 100dvw), 1.5px) solid #E0E0E0;
+
+  padding-left: clamp(0px, calc(12 / 1280 * 100dvw), 12px);
+  padding-top: clamp(0px, calc(12 / 832 * 100dvh), 12px);
+
+  line-height: clamp(0px, calc(18 / 832 * 100dvh), 18px);
+
+  box-sizing: border-box;
+  vertical-align: middle;
+
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+
+  font-size: clamp(10px, calc(16 / 1280 * 100dvw), 16px);
+  letter-spacing: clamp(
+    0.1px,
+    calc(16 / 100 / 1280 * 100dvw),
+    0.16px
+  );
+}
+
+.user_form_input_info {
+  height: clamp(0px, calc(26 / 832 * 100dvh), 26px);
+  margin-top: clamp(0px, calc(5 / 832 * 100dvh), 5px);
+
+  display: flex;
+  align-items: center;
+
+  color: #7D7D7D;
+
+  font-size: clamp(10px, calc(14 / 1280 * 100dvw), 14px);
+  letter-spacing: clamp(
+    0.1px,
+    calc(14 / 100 / 1280 * 100dvw),
+    0.14px
+  );
+}
+
+.user_form_input_info > div {
+  margin-left: clamp(0px, calc(5 / 1280 * 100dvw), 5px);
+  white-space: nowrap;
+}
+
+.user_form_input_info > img {
+  height: clamp(0px, calc(24 / 832 * 100dvh), 24px);
+  width: clamp(0px, calc(24 / 1280 * 100dvw), 24px);
+}
+
+.user_info {
+  margin-top: clamp(0px, calc(15 / 832 * 100dvh), 15px);
+
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0px, calc(15 / 832 * 100dvh), 15px);
+
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+
+  font-size: clamp(10px, calc(16 / 1280 * 100dvw), 16px);
+  letter-spacing: clamp(
+    0.1px,
+    calc(16 / 100 / 1280 * 100dvw),
+    0.16px
+  );
+}
+
+.user_info_part > span {
+  color: #853CFF;
+}

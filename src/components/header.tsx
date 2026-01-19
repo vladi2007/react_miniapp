@@ -14,7 +14,7 @@ function Header({user}: HeaderProps) {
         <div className="header">
           <img src="/header/logo.svg" id="logo_header" />
           <div className="header_nav">
-            <NavLink to="/main" className="header_nav_about_us">О нас</NavLink>
+            <NavLink to="/" className="header_nav_about_us">О нас</NavLink>
             <div className="header_nav_organization_settings">
               <div className="header_nav_organization_settings_name"> ИРИТ РТФ</div>
               <img src="/header/picked_org.svg" />
@@ -27,10 +27,10 @@ function Header({user}: HeaderProps) {
                 <div className="header_nav_item-dropdown-option">ИРИТ РТФ</div>
               </div>)}
             </div>
-            <div className="header_nav_user">@{user?.username}</div>
-            <div className="header_nav_photo">
+            <NavLink to="/user" className="header_nav_user">@{user?.username}</NavLink>
+            <NavLink to="/user" className="header_nav_photo">
               <img src={user?.photo_url}/>
-            </div>
+            </NavLink>
           </div>
         </div>
       </div>)}

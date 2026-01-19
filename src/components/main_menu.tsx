@@ -3,7 +3,7 @@ import "../assets/main_menu.scss"
 function Main(){
     return ( <><div className="main_menu_description">
         <div className="description">
-            <div className="main_menu_description_logo"><img  /></div>
+            <div className="main_menu_description_logo"><img src="/main_menu/Clik.svg" /></div>
             <div className="main_menu_description_text">Функциональный сервис для проведения онлайн-квизов. Сейчас, Вы,
                 находитесь в интерфейсе ведущего, где можете с легкостью начать управлять интерактивами.</div>
         </div>
