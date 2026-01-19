@@ -1,8 +1,9 @@
 {
   "files": [],
+  "include": ["src", "routes.ts"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-  "include": ["src", "routes.ts"]
+  
 }

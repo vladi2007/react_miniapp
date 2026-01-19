@@ -7,5 +7,8 @@ export default defineConfig({
   server: {
 		allowedHosts: true
 	},
+  preview: {
+    port: 5173 // здесь указываешь нужный порт
+  },
   publicDir: './public',
 })
