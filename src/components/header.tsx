@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import "../assets/header.scss";
 import type { TelegramUser } from "../types/telegram";
 
@@ -13,7 +14,7 @@ function Header({user}: HeaderProps) {
         <div className="header">
           <img src="/header/logo.svg" id="logo_header" />
           <div className="header_nav">
-            <div className="header_nav_about_us">О нас</div>
+            <NavLink to="/main" className="header_nav_about_us">О нас</NavLink>
             <div className="header_nav_organization_settings">
               <div className="header_nav_organization_settings_name"> ИРИТ РТФ</div>
               <img src="/header/picked_org.svg" />
