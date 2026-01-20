@@ -28,10 +28,11 @@
   margin-left: auto;
   align-items: center;
 }
-a:hover{
-    color: #ffffff;
+a:hover {
+  color: #ffffff;
 }
-.header_nav > div, a {
+.header_nav > div,
+a {
   color: #ffffff;
   cursor: pointer;
   display: flex;

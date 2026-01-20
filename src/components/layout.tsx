@@ -1,14 +1,12 @@
-import '../assets/layout.scss'
+import '../assets/layout.scss';
 import React from 'react';
 interface Layout {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
-function Layout({children } : Layout) {
+function Layout({ children }: Layout) {
   return (
     <>
-      <div className="layot">
-        {children}
-      </div>
+      <div className="layot">{children}</div>
     </>
   );
 }

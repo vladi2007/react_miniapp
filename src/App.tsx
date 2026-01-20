@@ -1,11 +1,11 @@
-import "./App.css";
-import Layout from "./components/layout";
-import Header from "./components/header";
-import Navigation from "./components/navigation";
-import { Navigate, Outlet } from "react-router";
-import type { TelegramUser } from "./types/telegram";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import './App.css';
+import Layout from './components/layout';
+import Header from './components/header';
+import Navigation from './components/navigation';
+import { Outlet } from 'react-router';
+import type { TelegramUser } from './types/telegram';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 interface RoleResponse {
   role: string;
 }
@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     const init = async () => {
       // Telegram WebApp setup
-      if (platform !== "android" && platform !== "ios") {
+      if (platform !== 'android' && platform !== 'ios') {
         window.Telegram?.WebApp?.requestFullscreen();
       }
 
@@ -29,13 +29,13 @@ function App() {
         try {
           const telegramId = telegramUser.id;
           const res = await axios.get<RoleResponse>(`http://localhost:3001/api/role?telegram_id=${telegramId}`);
-          
+          setRole(res.data.role);
         } catch (err) {
-          console.log("error")
+          console.log(err);
         }
       }
 
-      tg?.setBackgroundColor("#ffffff");
+      tg?.setBackgroundColor('#ffffff');
     };
 
     init();

@@ -1,4 +1,4 @@
-import "../assets/user.scss";
+import '../assets/user.scss';
 function User() {
   return (
     <>
@@ -7,21 +7,12 @@ function User() {
           <div className="user_form_input">
             <div className="user_form_input_title">Имя пользователя:</div>
             <div className="user_form_input_group">
-              <textarea
-                className="user_form_input_group_input"
-                placeholder="Сергеев Сергей Сергеевич"
-              ></textarea>
+              <textarea className="user_form_input_group_input" placeholder="Сергеев Сергей Сергеевич"></textarea>
               <div className="user_form_input_group_button">Сохранить</div>
             </div>
             <div className="user_form_input_info">
-              <img
-                src="/user/info.svg"
-                className="user_form_input_info_icon"
-              />
-              <div className="user_form_input_info_text">
-                Данное имя будет отображаться при создании интерактива и в
-                отчетах
-              </div>
+              <img src="/user/info.svg" className="user_form_input_info_icon" />
+              <div className="user_form_input_info_text">Данное имя будет отображаться при создании интерактива и в отчетах</div>
             </div>
           </div>
         </form>

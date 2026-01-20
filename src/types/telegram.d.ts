@@ -3,8 +3,8 @@ declare global {
     Telegram?: {
       WebApp?: {
         ready(): void;
-        setBackgroundColor(color: string): void;
-        colorScheme?: "light" | "dark";
+        setBackgroundColor(_color: string): void;
+        colorScheme?: 'light' | 'dark';
         themeParams?: {
           bg_color?: string;
           text_color?: string;
@@ -25,8 +25,8 @@ declare global {
             photo_url?: string;
           };
         };
-        platform:string;
-        requestFullscreen():void
+        platform: string;
+        requestFullscreen(): void;
       };
     };
   }

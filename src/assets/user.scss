@@ -1,20 +1,16 @@
-.user{
-    width: clamp(0px, calc(1056 / 1280 * 100dvw), 1056px);
-  margin:0 auto;
+.user {
+  width: clamp(0px, calc(1056 / 1280 * 100dvw), 1056px);
+  margin: 0 auto;
 }
 
 .user_form {
   margin-top: clamp(0px, calc(25 / 832 * 100dvh), 25px);
 
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
   font-weight: 500;
 
   font-size: clamp(10px, calc(16 / 1280 * 100dvw), 16px);
-  letter-spacing: clamp(
-    0.1px,
-    calc(16 / 100 / 1280 * 100dvw),
-    0.16px
-  );
+  letter-spacing: clamp(0.1px, calc(16 / 100 / 1280 * 100dvw), 0.16px);
 
   width: clamp(0px, calc(575 / 1280 * 100dvw), 575px);
 }
@@ -30,7 +26,7 @@
 }
 
 .user_form_input_group_button {
-  color: #6AB23D;
+  color: #6ab23d;
   cursor: pointer;
 
   margin-left: clamp(0px, calc(118 / 1280 * 100dvw), 118px);
@@ -41,7 +37,7 @@
   height: clamp(0px, calc(42 / 832 * 100dvh), 42px);
 
   border-radius: clamp(0px, calc(8 / 1280 * 100dvw), 8px);
-  border: clamp(0px, calc(1.5 / 1280 * 100dvw), 1.5px) solid #E0E0E0;
+  border: clamp(0px, calc(1.5 / 1280 * 100dvw), 1.5px) solid #e0e0e0;
 
   padding-left: clamp(0px, calc(12 / 1280 * 100dvw), 12px);
   padding-top: clamp(0px, calc(12 / 832 * 100dvh), 12px);
@@ -51,15 +47,11 @@
   box-sizing: border-box;
   vertical-align: middle;
 
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
   font-weight: 400;
 
   font-size: clamp(10px, calc(16 / 1280 * 100dvw), 16px);
-  letter-spacing: clamp(
-    0.1px,
-    calc(16 / 100 / 1280 * 100dvw),
-    0.16px
-  );
+  letter-spacing: clamp(0.1px, calc(16 / 100 / 1280 * 100dvw), 0.16px);
 }
 
 .user_form_input_info {
@@ -69,14 +61,10 @@
   display: flex;
   align-items: center;
 
-  color: #7D7D7D;
+  color: #7d7d7d;
 
   font-size: clamp(10px, calc(14 / 1280 * 100dvw), 14px);
-  letter-spacing: clamp(
-    0.1px,
-    calc(14 / 100 / 1280 * 100dvw),
-    0.14px
-  );
+  letter-spacing: clamp(0.1px, calc(14 / 100 / 1280 * 100dvw), 0.14px);
 }
 
 .user_form_input_info > div {
@@ -96,17 +84,13 @@
   flex-direction: column;
   gap: clamp(0px, calc(15 / 832 * 100dvh), 15px);
 
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
   font-weight: 500;
 
   font-size: clamp(10px, calc(16 / 1280 * 100dvw), 16px);
-  letter-spacing: clamp(
-    0.1px,
-    calc(16 / 100 / 1280 * 100dvw),
-    0.16px
-  );
+  letter-spacing: clamp(0.1px, calc(16 / 100 / 1280 * 100dvw), 0.16px);
 }
 
 .user_info_part > span {
-  color: #853CFF;
+  color: #853cff;
 }
