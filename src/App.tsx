@@ -1,14 +1,19 @@
 import './App.css';
-import Layout from './components/layout';
-import Header from './components/header';
-import Navigation from './components/navigation';
-import { Outlet } from 'react-router';
+
+import { Outlet, useOutletContext } from 'react-router-dom';
 import type { TelegramUser } from './types/telegram';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 interface RoleResponse {
   role: string;
 }
+
+interface UserContext {
+  user?: TelegramUser | undefined;
+  role?: string | undefined;
+}
+
 function App() {
   const [user, setUser] = useState<TelegramUser | undefined>();
   const [role, setRole] = useState<string | undefined>();
@@ -31,7 +36,8 @@ function App() {
           const res = await axios.get<RoleResponse>(`http://localhost:3001/api/role?telegram_id=${telegramId}`);
           setRole(res.data.role);
         } catch (err) {
-          console.log(err);
+          console.error(err);
+          <Navigate to="not_access" />;
         }
       }
 
@@ -39,18 +45,12 @@ function App() {
     };
 
     init();
-  }, [platform, tg]);
+  }, []);
 
-  if (!user) return null;
-
-  return (
-    <Layout>
-      <Header user={user} />
-      <Navigation />
-      <Outlet />
-      {role}
-    </Layout>
-  );
+  if (!user || !role) return <div>Загрузка...</div>;
+  return <Outlet context={{ user, role } satisfies UserContext} />;
 }
-
+export function useUserContext() {
+  return useOutletContext<UserContext>();
+}
 export default App;

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build && node dist/server",
     "dev": "npx nodemon",
-    "build": "rimraf ./dist && npx tsc"
+    "build": "rimraf ./dist && npx tsc",
+    "nodemon":"npx nodemon"
   },
   "keywords": [],
   "author": "",

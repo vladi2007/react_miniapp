@@ -15,10 +15,8 @@ app.get('/api/role', async (req, res) => {
   try {
     const response = await axios.get(`https://voshod08.ru/api/organization/me/role?x_key=super-secret-key&telegram_id=${telegram_id}`);
 
-    console.log(response.data.role);
     res.json({ role: response.data.role });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

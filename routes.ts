@@ -2,14 +2,25 @@ import { createBrowserRouter } from 'react-router';
 import App from './src/App';
 import Main from './src/components/main_menu';
 import User from './src/components/user';
-
+import PrivateLayout from './src/components/private_layout';
+import NotAcess from './src/components/not_access';
+import EmptyLayout from './src/components/empty_layout';
 export const routes = createBrowserRouter([
   {
-    path: '/',
     Component: App,
     children: [
-      { index: true, Component: Main },
-      { path: '/user', Component: User },
+      {
+        Component: PrivateLayout,
+        children: [
+          { index: true, Component: Main },
+          { path: 'user', Component: User },
+        ],
+      },
+
+      {
+        Component: EmptyLayout,
+        children: [{ path: 'not_access', Component: NotAcess }],
+      },
     ],
   },
 ]);
