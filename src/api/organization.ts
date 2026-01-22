@@ -22,3 +22,13 @@ export const getName = async (user: TelegramUser): Promise<organizationName> => 
     throw new Error('Не удалось получить имя');
   }
 };
+
+export const patchName = async (user: TelegramUser, name: string | undefined): Promise<organizationName> => {
+  try {
+    const res = await axios.patch(`${API_URL}/api/organization/me/name?telegram_id=${user.id}&name=${name}`);
+    return res.data;
+  } catch (err) {
+    console.error('Ошибка запроса на изменение имени:', err);
+    throw new Error('Не удалось изменить имя');
+  }
+};
