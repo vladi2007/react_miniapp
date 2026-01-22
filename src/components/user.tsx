@@ -8,8 +8,11 @@ function User() {
   const patchNameMutation = usePatchName(context?.user);
 
   const handleSave = () => {
-    if (!context?.user || !orgName) return;
-
+    if (!context?.user) return;
+    if (!orgName || orgName.length < 3) {
+      window?.Telegram?.WebApp?.showAlert('Ваше имя должно быть длинее 2 символов');
+      return;
+    }
     patchNameMutation.mutate({
       user: context.user,
       name: orgName,
@@ -27,6 +30,8 @@ function User() {
                 placeholder="Сергеев Сергей Сергеевич"
                 value={orgName}
                 onChange={(e) => setOrgName(e.target.value)}
+                maxLength={32}
+                minLength={3}
               ></textarea>
               <div className="user_form_input_group_button" onClick={handleSave}>
                 Сохранить

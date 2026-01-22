@@ -6,6 +6,7 @@ import PrivateLayout from './src/components/private_layout';
 import NotAcess from './src/components/not_access';
 import EmptyLayout from './src/components/empty_layout';
 import ProtectedRoute from './src/components/protected_route';
+import Organization from './src/components/organization';
 export const routes = createBrowserRouter([
   {
     Component: App,
@@ -18,6 +19,7 @@ export const routes = createBrowserRouter([
             children: [
               { index: true, Component: Main },
               { path: 'user', Component: User },
+              { path: 'organization', Component: Organization },
             ],
           },
         ],

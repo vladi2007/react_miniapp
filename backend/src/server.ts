@@ -58,3 +58,38 @@ app.patch('/api/organization/me/name', async (req, res) => {
     throw new Error('oh no');
   }
 });
+
+app.get('/api/organization/description', async (req, res) => {
+  const telegram_id = req.query.telegram_id;
+
+  if (!telegram_id) {
+    return res.status(400).json({ error: 'Missing telegram_id' });
+  }
+
+  try {
+    const response = await axios.get(`http://localhost:8000/api/organization/description?x_key=super-secret-key&telegram_id=${telegram_id}`);
+
+    res.json(response.data);
+  } catch (err) {
+    throw new Error('oh no');
+  }
+});
+
+app.patch('/api/organization/description', async (req, res) => {
+  const telegram_id = req.query.telegram_id;
+  const organization_name = req.query.organization_name;
+  const organization_description = req.query.organization_description;
+  if (!telegram_id) {
+    return res.status(400).json({ error: 'Missing telegram_id' });
+  }
+
+  try {
+    const response = await axios.patch(
+      `http://localhost:8000/api/organization/description?x_key=super-secret-key&telegram_id=${telegram_id}&organization_description=${organization_description}&organization_name=${organization_name}`
+    );
+
+    res.json(response.data);
+  } catch (err) {
+    throw new Error('oh no');
+  }
+});

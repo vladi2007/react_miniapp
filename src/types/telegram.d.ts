@@ -27,6 +27,7 @@ declare global {
         };
         platform: string;
         requestFullscreen(): void;
+        showAlert(_message: string): void;
       };
     };
   }

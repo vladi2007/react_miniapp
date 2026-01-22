@@ -1,0 +1,61 @@
+.organization {
+  width: clamp(0px, calc(1056 / 1280 * 100dvw), 1056px);
+  margin: 0 auto;
+}
+.org_form {
+  margin-top: clamp(0px, calc(25 / 832 * 100dvh), 25px);
+  margin-left: clamp(0px, calc(327 / 1280 * 100dvw), 327px);
+
+  width: clamp(0px, calc(378 / 1280 * 100dvw), 378px);
+
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+
+  font-size: clamp(10px, calc(16 / 1280 * 100dvw), 16px);
+  letter-spacing: clamp(0.1px, calc(16 / 100 / 1280 * 100dvw), 0.16px);
+}
+
+.org_form_input {
+  display: flex;
+  flex-direction: column;
+
+  gap: clamp(0px, calc(10 / 832 * 100dvh), 10px);
+  margin-bottom: clamp(0px, calc(10 / 832 * 100dvh), 10px);
+}
+
+.org_form_input_title {
+  height: clamp(0px, calc(18 / 832 * 100dvh), 18px);
+
+  display: flex;
+  align-items: center;
+}
+
+.org_form_input > textarea {
+  height: clamp(0px, calc(42 / 832 * 100dvh), 42px);
+
+  border-radius: clamp(0px, calc(8 / 1280 * 100dvw), 8px);
+  border: clamp(0px, calc(1.5 / 1280 * 100dvw), 1.5px) solid #e0e0e0;
+
+  padding-left: clamp(0px, calc(12 / 1280 * 100dvw), 12px);
+  padding-top: clamp(0px, calc(12 / 832 * 100dvh), 12px);
+
+  line-height: clamp(0px, calc(18 / 832 * 100dvh), 18px);
+
+  box-sizing: border-box;
+  vertical-align: middle;
+
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+
+  font-size: clamp(10px, calc(16 / 1280 * 100dvw), 16px);
+  letter-spacing: clamp(0.1px, calc(16 / 100 / 1280 * 100dvw), 0.16px);
+}
+
+.org_form_input_button {
+  width: clamp(0px, calc(165 / 1280 * 100dvw), 165px);
+
+  margin-left: auto;
+  white-space: nowrap;
+  color: #6ab23d;
+  cursor: pointer;
+}
