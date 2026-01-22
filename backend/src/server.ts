@@ -3,6 +3,7 @@ import axios from 'axios';
 const app = express();
 const PORT: number = 3001;
 import cors from 'cors';
+import { error } from 'node:console';
 app.use(cors());
 // Пример: endpoint для проверки роли через внешний API
 app.get('/api/role', async (req, res) => {
@@ -13,11 +14,11 @@ app.get('/api/role', async (req, res) => {
   }
 
   try {
-    const response = await axios.get(`https://voshod08.ru/api/organization/me/role?x_key=super-secret-key&telegram_id=${telegram_id}`);
+    const response = await axios.get(`http://localhost:8000/api/organization/me/role?x_key=super-secret-key&telegram_id=${telegram_id}`);
 
     res.json({ role: response.data.role });
   } catch (err) {
-    res.status(500).json({ error: 'Internal server error' });
+    throw new Error('123123');
   }
 });
 

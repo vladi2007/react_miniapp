@@ -5,18 +5,23 @@ import User from './src/components/user';
 import PrivateLayout from './src/components/private_layout';
 import NotAcess from './src/components/not_access';
 import EmptyLayout from './src/components/empty_layout';
+import ProtectedRoute from './src/components/protected_route';
 export const routes = createBrowserRouter([
   {
     Component: App,
     children: [
       {
-        Component: PrivateLayout,
+        Component: ProtectedRoute,
         children: [
-          { index: true, Component: Main },
-          { path: 'user', Component: User },
+          {
+            Component: PrivateLayout,
+            children: [
+              { index: true, Component: Main },
+              { path: 'user', Component: User },
+            ],
+          },
         ],
       },
-
       {
         Component: EmptyLayout,
         children: [{ path: 'not_access', Component: NotAcess }],

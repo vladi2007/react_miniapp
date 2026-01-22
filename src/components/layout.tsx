@@ -6,7 +6,7 @@ interface Layout {
 function Layout({ children }: Layout) {
   return (
     <>
-      <div className="layot">{children}</div>
+      <div className="layout">{children}</div>
     </>
   );
 }
