@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router';
 import '../assets/header.scss';
 import type { TelegramUser } from '../types/telegram';
-
+import type { organizationName } from '../types/api/organization';
 interface HeaderProps {
   user: TelegramUser | undefined;
+  orgName: organizationName | undefined;
 }
-function Header({ user }: HeaderProps) {
+function Header({ user, orgName }: HeaderProps) {
   const orgs = false;
   return (
     <>
@@ -18,7 +19,7 @@ function Header({ user }: HeaderProps) {
                 О нас
               </NavLink>
               <div className="header_nav_organization_settings">
-                <div className="header_nav_organization_settings_name"> ИРИТ РТФ</div>
+                <div className="header_nav_organization_settings_name">{orgName?.organization_name}</div>
                 <img src="/header/picked_org.svg" />
                 {orgs && (
                   <div className="header_nav_item-dropdown-options">

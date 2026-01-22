@@ -8,7 +8,7 @@ function PrivateLayout() {
   const context = useUserContext();
   return (
     <Layout>
-      <Header user={context.user} />
+      <Header user={context.user} orgName={context.orgName} />
       <Navigation />
       <Outlet />
     </Layout>
