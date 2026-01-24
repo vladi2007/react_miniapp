@@ -7,6 +7,7 @@ import NotAcess from './src/components/not_access';
 import EmptyLayout from './src/components/empty_layout';
 import ProtectedRoute from './src/components/protected_route';
 import Organization from './src/components/organization';
+import Users from './src/components/users';
 export const routes = createBrowserRouter([
   {
     Component: App,
@@ -20,6 +21,7 @@ export const routes = createBrowserRouter([
               { index: true, Component: Main },
               { path: 'user', Component: User },
               { path: 'organization', Component: Organization },
+              { path: 'users', Component: Users },
             ],
           },
         ],

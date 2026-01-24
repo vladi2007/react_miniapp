@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { usePatchOrg } from '../hooks/useUser';
 function Organization() {
   const context = useUserContext();
-  const patchOrgMutation = usePatchOrg(context?.user);
+  const patchOrgMutation = usePatchOrg();
   const { data: orgData, isLoading: orgLoading } = useOrgDesc(context?.user);
   const [orgName, setOrgName] = useState(orgData?.organization_name);
   const [orgDesc, setOrgDesc] = useState(orgData?.organization_description);

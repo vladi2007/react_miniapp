@@ -19,3 +19,29 @@ export interface PatchOrgPayload {
   organization_description: string | undefined;
   organization_name: string;
 }
+export type UserRole = 'admin' | 'leader' | 'organizer';
+export type UserRoleToAdd = 'admin' | 'leader';
+export type UsersFilter = 'admin' | 'leader' | 'all';
+export interface OrganizationParticipant {
+  id: number;
+  name: string;
+  username: string;
+  role: UserRole;
+  is_you: boolean;
+}
+
+export interface OrganizationParticipantsResponse {
+  participants: OrganizationParticipant[];
+}
+
+export type AddUserPayload = {
+  user: TelegramUser | undefined;
+  participant_username: string | undefined;
+  role: string;
+};
+
+export type PatchUserRolePayload = {
+  user: TelegramUser | undefined;
+  participant_id: number;
+  role: string;
+};

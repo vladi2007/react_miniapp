@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { TelegramUser } from '../types/telegram';
-import type { organizationName, organizationDescription } from '../types/api/organization';
+import type { organizationName, organizationDescription, OrganizationParticipantsResponse } from '../types/api/organization';
 const API_URL = 'http://localhost:3001';
 
 export const getRole = async (user: TelegramUser): Promise<string> => {
@@ -56,5 +56,36 @@ export const patchOrganization = async (
   } catch (err) {
     console.error('Ошибка запроса на изменение данных организации:', err);
     throw new Error('Не удалось изменить данные организации');
+  }
+};
+
+export const getParticipants = async (user: TelegramUser, filter: string): Promise<OrganizationParticipantsResponse> => {
+  try {
+    const res = await axios.get(`${API_URL}/api/organization/participants?telegram_id=${user.id}&filter=${filter}`);
+    return res.data;
+  } catch (err) {
+    console.error('Ошибка запроса участников организации:', err);
+    throw new Error('Не удалось данные участников организации');
+  }
+};
+export const postParticipant = async (user: TelegramUser, role: string, participant_username: string): Promise<OrganizationParticipantsResponse> => {
+  try {
+    const res = await axios.post(`${API_URL}/api/organization/participants?telegram_id=${user.id}&role=${role}&participant_username=${participant_username}`);
+    return res.data;
+  } catch (err) {
+    const error = err as AxiosError;
+    throw error;
+  }
+};
+
+export const patchParticipant = async (user: TelegramUser, role: string, participant_id: number): Promise<OrganizationParticipantsResponse> => {
+  try {
+    const res = await axios.patch(`${API_URL}/api/organization/participant_change_role?telegram_id=${user.id}&role=${role}&participant_id=${participant_id}`);
+    return res.data;
+  } catch (err) {
+    const error = err as AxiosError;
+
+    // просто пробрасываем дальше
+    throw error;
   }
 };
