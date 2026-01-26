@@ -2,7 +2,7 @@ import { Outlet, useOutletContext } from 'react-router-dom';
 import type { TelegramUser } from './types/telegram';
 import type { UserContext } from './types/user';
 import { useEffect, useState } from 'react';
-import { useUser, useName } from './hooks/useUser';
+import { useUser } from './hooks/useUser';
 import './App.css';
 
 function App() {
@@ -10,7 +10,6 @@ function App() {
   const tg = window.Telegram?.WebApp;
   const platform = window.Telegram?.WebApp?.platform;
   const { data: role, isLoading: roleLoading } = useUser(user);
-  const { data: nameData, isLoading: nameLoading } = useName(user);
 
   useEffect(() => {
     const telegramUser = tg?.initDataUnsafe?.user;
@@ -23,9 +22,9 @@ function App() {
     tg?.setBackgroundColor('#ffffff');
   }, []);
 
-  if (!user || roleLoading || nameLoading) return;
+  if (!user || roleLoading) return;
 
-  return <Outlet context={{ user: user, role: role, orgName: nameData } satisfies UserContext} />;
+  return <Outlet context={{ user: user, role: role } satisfies UserContext} />;
 }
 
 // Хук для дочерних компонентов

@@ -42,5 +42,3 @@ export interface TelegramUser {
   is_premium?: boolean;
   photo_url?: string;
 }
-
-export { TelegramUser };
