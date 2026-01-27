@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { AxiosError } from 'axios';
 import { useOrgParticipants, useAddUser, usePatchUser } from '../hooks/useUser';
 import { useUserContext } from '../App';
 import '../assets/users.scss';
 import type { OrganizationParticipant, UserRole, UsersFilter, UserRoleToAdd } from '../types/api/organization';
+import type { AxiosError } from 'axios';
 function Users() {
   const context = useUserContext();
 
@@ -30,6 +30,10 @@ function Users() {
     setShowChangeRole(0);
   };
   const handleAddUser = async () => {
+    if (!userNameToAdd || userNameToAdd.length < 3) {
+      window?.Telegram?.WebApp?.showAlert('username должно быть длинее 2 символов');
+      return;
+    }
     try {
       await addUserMutation.mutateAsync({
         user: context?.user,
@@ -39,8 +43,9 @@ function Users() {
 
       setShowAddUser(false);
     } catch (err) {
-      const error = err as AxiosError;
-      if (error?.response?.status === 409) {
+      const error = err as AxiosError<{ detail: string }>;
+      console.log(error.response?.data.detail);
+      if (error.status === 409) {
         const inviteLink = `https://t.me/ClikInteractive_Bot?start=${context?.user?.id}_${selectedRole}`;
 
         navigator.clipboard
@@ -52,10 +57,11 @@ function Users() {
             window.Telegram?.WebApp?.showAlert(`Пользователь не найден.\nНе удалось скопировать ссылку, вот она:\n${inviteLink}`);
           });
       }
-      if (error?.response?.status === 404) {
+      if (error.status === 404) {
         window.Telegram?.WebApp?.showAlert('Этот пользователь уже состоит в вашей организации');
       }
     }
+    return false;
   };
 
   const groups: Record<UsersFilter, string> = {
@@ -210,7 +216,7 @@ function Users() {
           <div className="users_popup-overlay" onClick={() => setShowChangeRole(0)}>
             <div className="users_change_popup-content" onClick={(e) => e.stopPropagation()}>
               <div className="users_popup-text">
-                Вы уверены, что хотите выдать роль {roles[selectedRoleToChange]} пользователю
+                Вы уверены, что хотите выдать роль {roles[selectedRoleToChange]} пользователю{' '}
                 <span style={{ color: '#853CFF' }}>{orgParts?.participants.find((p) => p.id === showChangeRole)?.name}</span>?
               </div>
               <div className="users_popup-buttons margin">

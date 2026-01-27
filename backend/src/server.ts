@@ -68,19 +68,21 @@ app.patch(
 
 app.get(
   '/api/organization/participants',
-  validateQueryParams(['telegram_id', 'filter']),
+  validateQueryParams(['telegram_id', 'filter_parts']),
   asyncHandler(async (req, res) => {
-    const response = await api.get(`/api/organization/participants?x_key=super-secret-key&telegram_id=${req.query.telegram_id}&filter=${req.query.filter}`);
+    const response = await api.get(
+      `/api/organization/participants?x_key=super-secret-key&telegram_id=${req.query.telegram_id}&filter=${req.query.filter_parts}`
+    );
     res.json(response.data);
   })
 );
 
 app.post(
   '/api/organization/participants',
-  validateQueryParams(['telegram_id', 'role', 'participant_username']),
+  validateQueryParams(['telegram_id', 'patch_role', 'patch_participant_username']),
   asyncHandler(async (req, res) => {
     const response = await api.post(
-      `/api/organization/participants?x_key=super-secret-key&telegram_id=${req.query.telegram_id}&role=${req.query.role}&participant_username=${req.query.participant_username}`
+      `/api/organization/participants?x_key=super-secret-key&telegram_id=${req.query.telegram_id}&role=${req.query.patch_role}&participant_username=${req.query.patch_participant_username}`
     );
     res.json(response.data);
   })
@@ -88,10 +90,10 @@ app.post(
 
 app.patch(
   '/api/organization/participant_change_role',
-  validateQueryParams(['telegram_id', 'role', 'participant_id']),
+  validateQueryParams(['telegram_id', 'patch_role', 'patch_participant_id']),
   asyncHandler(async (req, res) => {
     const response = await api.patch(
-      `/api/organization/participant_change_role?x_key=super-secret-key&telegram_id=${req.query.telegram_id}&role=${req.query.role}&participant_id=${req.query.participant_id}`
+      `/api/organization/participant_change_role?x_key=super-secret-key&telegram_id=${req.query.telegram_id}&role=${req.query.patch_role}&participant_id=${req.query.patch_participant_id}`
     );
     res.json(response.data);
   })

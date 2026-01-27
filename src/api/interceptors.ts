@@ -1,18 +1,16 @@
 import { api } from '../api/organization';
-import { handleAxiosError } from './handleAxiosError';
-
+import { queryClient } from '../main';
 export function setupInterceptors() {
   api.interceptors.response.use(
     (response) => response,
     (error) => {
-      const apiError = handleAxiosError(error);
-
-      if (apiError.status === 404 && apiError.detail === 'User_from not found on organization') {
-        window.location.href = '/not_access';
-        return;
+      if (error?.response?.status === 404) {
+        queryClient.invalidateQueries({
+          queryKey: ['role'],
+        });
       }
 
-      return Promise.reject(apiError);
+      return Promise.reject(error);
     }
   );
 }

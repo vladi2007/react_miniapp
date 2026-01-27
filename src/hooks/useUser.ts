@@ -6,7 +6,7 @@ import { queryClient } from '../main';
 
 export function useUser(user: TelegramUser | undefined) {
   return useQuery({
-    queryKey: ['role', user?.id],
+    queryKey: ['role'],
     queryFn: () => getRole(user!),
     enabled: !!user,
     refetchOnWindowFocus: false,
@@ -54,6 +54,9 @@ export function usePatchOrg() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ['org_desc', variables.user?.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['org_name', variables.user?.id],
       });
     },
   });

@@ -40,15 +40,15 @@ export const patchOrganization = async (
 };
 
 export const getParticipants = async (user: TelegramUser, filter: string): Promise<OrganizationParticipantsResponse> => {
-  const res = await api.get(`/api/organization/participants?telegram_id=${user.id}&filter=${filter}`);
+  const res = await api.get(`/api/organization/participants?telegram_id=${user.id}&filter_parts=${filter}`);
   return res.data;
 };
 export const postParticipant = async (user: TelegramUser, role: string, participant_username: string): Promise<OrganizationParticipantsResponse> => {
-  const res = await api.post(`/api/organization/participants?telegram_id=${user.id}&role=${role}&participant_username=${participant_username}`);
+  const res = await api.post(`/api/organization/participants?telegram_id=${user.id}&patch_role=${role}&patch_participant_username=${participant_username}`);
   return res.data;
 };
 
 export const patchParticipant = async (user: TelegramUser, role: string, participant_id: number): Promise<OrganizationParticipantsResponse> => {
-  const res = await api.patch(`/api/organization/participant_change_role?telegram_id=${user.id}&role=${role}&participant_id=${participant_id}`);
+  const res = await api.patch(`/api/organization/participant_change_role?telegram_id=${user.id}&patch_role=${role}&patch_participant_id=${participant_id}`);
   return res.data;
 };
