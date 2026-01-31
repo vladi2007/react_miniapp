@@ -7,9 +7,9 @@ import type { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addUserToOrganization, type AddUserToOrganization } from '../types/forms/add_user_to_org';
+import FormTextField from './form_text_field';
 function Users() {
   const context = useUserContext();
-
   const [filter, setFilter] = useState<UsersFilter>('all');
   const [selectedRoleToChange, setSelectedRoleToChange] = useState<UserRole>('leader');
   const [isAddRoleOpened, setIsAddRoleOpened] = useState<boolean>(false);
@@ -23,12 +23,19 @@ function Users() {
   const patchUserMutation = usePatchUser();
 
   const {
+    control,
     register,
+    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
     watch,
     setValue,
-  } = useForm<AddUserToOrganization>({ resolver: yupResolver(addUserToOrganization), mode: 'all', defaultValues: { role: 'leader', name: '' } });
+  } = useForm<AddUserToOrganization>({
+    resolver: yupResolver(addUserToOrganization),
+    mode: 'all',
+    defaultValues: { role: 'leader', name: '' },
+    shouldFocusError: true,
+  });
   const selectedRole = watch('role');
 
   const handlePatchUser = (id: number, role: string) => {
@@ -103,8 +110,7 @@ function Users() {
         <form className="users_form">
           <div className="users_form_finder_finder">
             <img className="users_form_input-icon" src="/users/find.svg" />
-
-            <input type="text" placeholder="Поиск участника" className="users_form_search-input" />
+            <FormTextField name="find" control={control} placeholder="Поиск участника"></FormTextField>
           </div>
           <div
             className="users_form_button"
@@ -260,14 +266,14 @@ function Users() {
                 src="/users/closeAdd.svg"
                 onClick={() => {
                   setShowAddUser(false);
+                  reset();
                 }}
                 className="add_popup-close"
               />
               <div className="add_popup-text">Добавление пользователя в организацию</div>
               <form className="add_form" onSubmit={handleSubmit(handleAddUser)}>
                 {errors.name?.message}
-                <textarea placeholder="Введите username в telegram: @ffadff" {...register('name')} />
-
+                <FormTextField name="name" control={control} placeholder="Введите username в telegram: @ffadff"></FormTextField>
                 <div className="add_custom-dropdown" onClick={() => setIsAddRoleOpened(!isAddRoleOpened)}>
                   <div className="add_custom-dropdown-selected">{rolesToAdd[selectedRole]}</div>
                   <div className="add_custom-arrow">

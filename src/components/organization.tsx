@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { usePatchOrg } from '../hooks/useUser';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ErrorMessage } from '@hookform/error-message';
 import { organizationSettings, type OrganizationSettingsSchema } from '../types/forms/organization_settings';
 function Organization() {
   const context = useUserContext();
@@ -15,7 +16,8 @@ function Organization() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isDirty },
-  } = useForm({ resolver: yupResolver(organizationSettings), mode: 'all' });
+  } = useForm({ resolver: yupResolver(organizationSettings), mode: 'all', shouldFocusError: true, shouldUseNativeValidation: false });
+
   useEffect(() => {
     if (orgData) {
       reset({
@@ -41,12 +43,12 @@ function Organization() {
           <div className="org_form_input">
             <div className="org_form_input_title">Название организации:</div>
             <textarea className="org_form_input_input" placeholder="Название" {...register('name')}></textarea>
-            {errors?.name?.message}
+            <ErrorMessage errors={errors} name="name" render={({ message }) => <p>{message}</p>} />
           </div>
           <div className="org_form_input">
             <div className="org_form_input_title">Описание организации:</div>
             <textarea className="org_form_input_input" placeholder="Описание" {...register('description')}></textarea>
-            {errors?.description?.message}
+            <ErrorMessage errors={errors} name="description" render={({ message }) => <p>{message}</p>} />
           </div>
           <button className="org_form_input_button" type="submit" disabled={isSubmitting || !isDirty}>
             Сохранить изменения

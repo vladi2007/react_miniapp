@@ -13,7 +13,7 @@ function User() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isDirty },
-  } = useForm({ resolver: yupResolver(organizationUserName), mode: 'all' });
+  } = useForm({ resolver: yupResolver(organizationUserName), mode: 'all', shouldFocusError: true });
 
   useEffect(() => {
     if (context)
