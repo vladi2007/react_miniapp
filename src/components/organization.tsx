@@ -1,63 +1,56 @@
 import '../assets/organization.scss';
 import { useUserContext } from '../App';
 import { useOrgDesc } from '../hooks/useUser';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { usePatchOrg } from '../hooks/useUser';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { organizationSettings, type OrganizationSettingsSchema } from '../types/forms/organization_settings';
 function Organization() {
   const context = useUserContext();
   const patchOrgMutation = usePatchOrg();
   const { data: orgData, isLoading: orgLoading } = useOrgDesc(context?.user);
-  const [orgName, setOrgName] = useState(orgData?.organization_name);
-  const [orgDesc, setOrgDesc] = useState(orgData?.organization_description);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting, isDirty },
+  } = useForm({ resolver: yupResolver(organizationSettings), mode: 'all' });
   useEffect(() => {
     if (orgData) {
-      setOrgName(orgData.organization_name ?? '');
-      setOrgDesc(orgData.organization_description ?? '');
+      reset({
+        name: orgData.organization_name,
+        description: orgData.organization_description,
+      });
     }
-  }, [orgData]);
+  }, [orgData, reset]);
   if (orgLoading) return;
 
-  const handleSave = () => {
+  const handleSave = (data: OrganizationSettingsSchema) => {
     if (!context?.user) return;
-    if (!orgName || orgName.length < 3) {
-      window?.Telegram?.WebApp?.showAlert('Ваше имя должно быть длинее 2 символов');
-      return;
-    }
     patchOrgMutation.mutate({
       user: context.user,
-      organization_name: orgName,
-      organization_description: orgDesc,
+      organization_name: data.name,
+      organization_description: data.description,
     });
   };
   return (
     <>
       <div className="organization">
-        <form className="org_form">
+        <form className="org_form" onSubmit={handleSubmit(handleSave)}>
           <div className="org_form_input">
             <div className="org_form_input_title">Название организации:</div>
-            <textarea
-              className="org_form_input_input"
-              placeholder="Название"
-              value={orgName}
-              onChange={(e) => setOrgName(e.target.value)}
-              maxLength={32}
-              minLength={3}
-            ></textarea>
+            <textarea className="org_form_input_input" placeholder="Название" {...register('name')}></textarea>
+            {errors?.name?.message}
           </div>
           <div className="org_form_input">
             <div className="org_form_input_title">Описание организации:</div>
-            <textarea
-              className="org_form_input_input"
-              placeholder="Описание"
-              value={orgDesc}
-              onChange={(e) => setOrgDesc(e.target.value)}
-              maxLength={200}
-              minLength={0}
-            ></textarea>
+            <textarea className="org_form_input_input" placeholder="Описание" {...register('description')}></textarea>
+            {errors?.description?.message}
           </div>
-          <div className="org_form_input_button" onClick={handleSave}>
+          <button className="org_form_input_button" type="submit" disabled={isSubmitting || !isDirty}>
             Сохранить изменения
-          </div>
+          </button>
         </form>
       </div>
     </>

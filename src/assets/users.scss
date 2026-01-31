@@ -551,3 +551,13 @@
   color: white;
   border-color: #6ab23d;
 }
+
+.add_custom-dropdown-option input[type='radio'] {
+  display: none;
+}
+
+.add_custom-dropdown-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

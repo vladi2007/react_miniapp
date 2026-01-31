@@ -4,12 +4,13 @@ import { useUserContext } from '../App';
 import '../assets/users.scss';
 import type { OrganizationParticipant, UserRole, UsersFilter, UserRoleToAdd } from '../types/api/organization';
 import type { AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { addUserToOrganization, type AddUserToOrganization } from '../types/forms/add_user_to_org';
 function Users() {
   const context = useUserContext();
 
   const [filter, setFilter] = useState<UsersFilter>('all');
-  const [userNameToAdd, setUserNameToAdd] = useState<string>('');
-  const [selectedRole, setSelectedRole] = useState<UserRoleToAdd>('leader');
   const [selectedRoleToChange, setSelectedRoleToChange] = useState<UserRole>('leader');
   const [isAddRoleOpened, setIsAddRoleOpened] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<number>(0);
@@ -20,6 +21,16 @@ function Users() {
   const { data: orgParts, isLoading: _ } = useOrgParticipants(context?.user, filter);
   const addUserMutation = useAddUser();
   const patchUserMutation = usePatchUser();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    watch,
+    setValue,
+  } = useForm<AddUserToOrganization>({ resolver: yupResolver(addUserToOrganization), mode: 'all', defaultValues: { role: 'leader', name: '' } });
+  const selectedRole = watch('role');
+
   const handlePatchUser = (id: number, role: string) => {
     patchUserMutation.mutate({
       user: context?.user,
@@ -29,16 +40,12 @@ function Users() {
     setShowDelete(0);
     setShowChangeRole(0);
   };
-  const handleAddUser = async () => {
-    if (!userNameToAdd || userNameToAdd.length < 3) {
-      window?.Telegram?.WebApp?.showAlert('username должно быть длинее 2 символов');
-      return;
-    }
+  const handleAddUser = async (data: AddUserToOrganization) => {
     try {
       await addUserMutation.mutateAsync({
         user: context?.user,
-        participant_username: userNameToAdd,
-        role: selectedRole,
+        participant_username: data.name,
+        role: data.role,
       });
 
       setShowAddUser(false);
@@ -198,7 +205,7 @@ function Users() {
               <div className="users_popup-text">
                 Вы уверены, что хотите удалить пользователя
                 <br />
-                <span style={{ color: '#853CFF' }}>{orgParts?.participants.find((p) => p.id === showDelete)?.name}</span>?
+                <span style={{ color: '#853CFF' }}>{orgParts?.participants.find((p: OrganizationParticipant) => p.id === showDelete)?.name}</span>?
               </div>
               <div className="users_popup-text_">Это действие отменить будет невозможно. </div>
               <div className="users_popup-buttons">
@@ -217,7 +224,7 @@ function Users() {
             <div className="users_change_popup-content" onClick={(e) => e.stopPropagation()}>
               <div className="users_popup-text">
                 Вы уверены, что хотите выдать роль {roles[selectedRoleToChange]} пользователю{' '}
-                <span style={{ color: '#853CFF' }}>{orgParts?.participants.find((p) => p.id === showChangeRole)?.name}</span>?
+                <span style={{ color: '#853CFF' }}>{orgParts?.participants.find((p: OrganizationParticipant) => p.id === showChangeRole)?.name}</span>?
               </div>
               <div className="users_popup-buttons margin">
                 <div
@@ -253,52 +260,47 @@ function Users() {
                 src="/users/closeAdd.svg"
                 onClick={() => {
                   setShowAddUser(false);
-                  setUserNameToAdd('');
-                  setSelectedRole('leader');
                 }}
                 className="add_popup-close"
               />
               <div className="add_popup-text">Добавление пользователя в организацию</div>
-              <form className="add_form">
-                <textarea
-                  placeholder="Введите  username в telegram: @ffadff "
-                  value={userNameToAdd}
-                  maxLength={32}
-                  onChange={(e) => {
-                    setUserNameToAdd(e.target.value);
-                  }}
-                />
+              <form className="add_form" onSubmit={handleSubmit(handleAddUser)}>
+                {errors.name?.message}
+                <textarea placeholder="Введите username в telegram: @ffadff" {...register('name')} />
+
                 <div className="add_custom-dropdown" onClick={() => setIsAddRoleOpened(!isAddRoleOpened)}>
                   <div className="add_custom-dropdown-selected">{rolesToAdd[selectedRole]}</div>
                   <div className="add_custom-arrow">
                     <img src="/users/open_add.svg" />
-                    <img />
                   </div>
                 </div>
+
                 {isAddRoleOpened && (
                   <div className="add_custom-dropdown-options">
                     <div className="add_custom-dropdown-option-list">
                       {Object.entries(rolesToAdd).map(([key, label]) => (
-                        <div
-                          className="add_custom-dropdown-option"
+                        <label
                           key={key}
+                          className="add_custom-dropdown-option"
                           onClick={() => {
-                            setSelectedRole(key as UserRoleToAdd);
+                            setValue('role', key as UserRoleToAdd, { shouldValidate: true });
                             setIsAddRoleOpened(false);
                           }}
                         >
-                          {selectedRole === (key as UserRoleToAdd) && <img className="add_custom-dropdown-circle" src="/users/picked_role.svg" />}
-                          {selectedRole !== (key as UserRoleToAdd) && <img className="add_custom-dropdown-circle" src="/users/unpicked_role.svg" />}
+                          <input type="radio" value={key} {...register('role')} />
+                          {errors.role?.message}
+                          <img className="add_custom-dropdown-circle" src={selectedRole === key ? '/users/picked_role.svg' : '/users/unpicked_role.svg'} />
+
                           <div className="add_custom-dropdown-text">{label}</div>
-                        </div>
+                        </label>
                       ))}
                     </div>
                   </div>
                 )}
+                <button className="add_popup-btn" type="submit" disabled={isSubmitting}>
+                  Добавить
+                </button>
               </form>
-              <div className="add_popup-btn" onClick={handleAddUser}>
-                Добавить
-              </div>
             </div>
           </div>
         )}
