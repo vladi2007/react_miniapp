@@ -1,13 +1,17 @@
 import { useEffect } from 'react';
-import { useUserContext } from '../App';
 import { usePatchName } from '../hooks/useUser';
 import '../assets/user.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { organizationUserName, type OrganizationUserNameSchema } from '../types/forms/org_user_name';
+import { useUserRole, useTelegramUser } from '../store';
+import { useOutletContext } from 'react-router-dom';
+import type { UserContext } from '../types/user';
 function User() {
-  const context = useUserContext();
-  const patchNameMutation = usePatchName(context?.user);
+  const user = useTelegramUser();
+  const role = useUserRole();
+  const patchNameMutation = usePatchName(user);
+  const context = useOutletContext<UserContext>();
   const {
     register,
     handleSubmit,
@@ -16,15 +20,15 @@ function User() {
   } = useForm({ resolver: yupResolver(organizationUserName), mode: 'all', shouldFocusError: true });
 
   useEffect(() => {
-    if (context)
+    if (user)
       reset({
-        name: context?.orgName?.name,
+        name: context.orgName?.name,
       });
-  }, [context]);
+  }, [user]);
   const handleSave = (data: OrganizationUserNameSchema) => {
-    if (!context?.user) return;
+    if (!user) return;
     patchNameMutation.mutate({
-      user: context.user,
+      user: user,
       name: data.name,
     });
   };
@@ -49,13 +53,13 @@ function User() {
         </form>
         <div className="user_info">
           <div className="user_info_part">
-            Telegram username: <span>@{context?.orgName?.username}</span>
+            Telegram username: <span>@{context.orgName?.username}</span>
           </div>
           <div className="user_info_part">
-            Организация: {context?.orgName?.organization_name} <span></span>
+            Организация: {context.orgName?.organization_name} <span></span>
           </div>
           <div className="user_info_part">
-            Роль в организации: <span>{context?.role}</span>
+            Роль в организации: <span>{role}</span>
           </div>
         </div>
       </div>

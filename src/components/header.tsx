@@ -1,13 +1,13 @@
 import { NavLink } from 'react-router';
 import '../assets/header.scss';
-import type { TelegramUser } from '../types/telegram';
+import { useTelegramUser } from '../store';
 import type { organizationName } from '../types/api/organization';
 interface HeaderProps {
-  user: TelegramUser | undefined;
   orgName: organizationName | undefined;
 }
-function Header({ user, orgName }: HeaderProps) {
+function Header({ orgName }: HeaderProps) {
   const orgs = false;
+  const user = useTelegramUser();
   return (
     <>
       {user && (

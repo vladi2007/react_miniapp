@@ -1,5 +1,4 @@
 import '../assets/organization.scss';
-import { useUserContext } from '../App';
 import { useOrgDesc } from '../hooks/useUser';
 import { useEffect } from 'react';
 import { usePatchOrg } from '../hooks/useUser';
@@ -7,10 +6,11 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ErrorMessage } from '@hookform/error-message';
 import { organizationSettings, type OrganizationSettingsSchema } from '../types/forms/organization_settings';
+import { useTelegramUser } from '../store';
 function Organization() {
-  const context = useUserContext();
+  const user = useTelegramUser();
   const patchOrgMutation = usePatchOrg();
-  const { data: orgData, isLoading: orgLoading } = useOrgDesc(context?.user);
+  const { data: orgData, isLoading: orgLoading } = useOrgDesc(user);
   const {
     register,
     handleSubmit,
@@ -29,9 +29,9 @@ function Organization() {
   if (orgLoading) return;
 
   const handleSave = (data: OrganizationSettingsSchema) => {
-    if (!context?.user) return;
+    if (!user) return;
     patchOrgMutation.mutate({
-      user: context.user,
+      user: user,
       organization_name: data.name,
       organization_description: data.description,
     });

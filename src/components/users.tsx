@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useOrgParticipants, useAddUser, usePatchUser } from '../hooks/useUser';
-import { useUserContext } from '../App';
 import '../assets/users.scss';
 import type { OrganizationParticipant, UserRole, UsersFilter, UserRoleToAdd } from '../types/api/organization';
 import type { AxiosError } from 'axios';
@@ -8,8 +7,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addUserToOrganization, type AddUserToOrganization } from '../types/forms/add_user_to_org';
 import FormTextField from './form_text_field';
+import { useTelegramUser, useUserRole } from '../store';
 function Users() {
-  const context = useUserContext();
+  const user = useTelegramUser();
+  const role = useUserRole();
   const [filter, setFilter] = useState<UsersFilter>('all');
   const [selectedRoleToChange, setSelectedRoleToChange] = useState<UserRole>('leader');
   const [isAddRoleOpened, setIsAddRoleOpened] = useState<boolean>(false);
@@ -18,7 +19,7 @@ function Users() {
   const [showAddUser, setShowAddUser] = useState<boolean>(false);
   const [showChoiceRole, setShowChoiceRole] = useState<number>(0);
 
-  const { data: orgParts, isLoading: _ } = useOrgParticipants(context?.user, filter);
+  const { data: orgParts, isLoading: _ } = useOrgParticipants(user, filter);
   const addUserMutation = useAddUser();
   const patchUserMutation = usePatchUser();
 
@@ -40,7 +41,7 @@ function Users() {
 
   const handlePatchUser = (id: number, role: string) => {
     patchUserMutation.mutate({
-      user: context?.user,
+      user: user,
       participant_id: id,
       role: role,
     });
@@ -50,7 +51,7 @@ function Users() {
   const handleAddUser = async (data: AddUserToOrganization) => {
     try {
       await addUserMutation.mutateAsync({
-        user: context?.user,
+        user: user,
         participant_username: data.name,
         role: data.role,
       });
@@ -60,7 +61,7 @@ function Users() {
       const error = err as AxiosError<{ detail: string }>;
       console.log(error.response?.data.detail);
       if (error.status === 409) {
-        const inviteLink = `https://t.me/ClikInteractive_Bot?start=${context?.user?.id}_${selectedRole}`;
+        const inviteLink = `https://t.me/ClikInteractive_Bot?start=${user?.id}_${selectedRole}`;
 
         navigator.clipboard
           .writeText(inviteLink)
@@ -91,6 +92,7 @@ function Users() {
     admin: 'Администратор',
     leader: 'Ведущий',
     organizer: 'Создатель организации',
+    participant: 'Участник',
   };
   const canChangeRole = (participantRole: string, yourRole: string | undefined, isYou: boolean) => {
     if (isYou) return false; // с самим собой нельзя действия производить
@@ -154,10 +156,10 @@ function Users() {
 
                   <div>
                     <div
-                      style={{ display: 'flex', alignItems: 'center', cursor: canChangeRole(user.role, context.role, user.is_you) ? 'pointer' : 'default' }}
-                      className={`user_list_list_role${canChangeRole(user.role, context.role, user.is_you) ? '_' : ''}`}
+                      style={{ display: 'flex', alignItems: 'center', cursor: canChangeRole(user.role, role, user.is_you) ? 'pointer' : 'default' }}
+                      className={`user_list_list_role${canChangeRole(user.role, role, user.is_you) ? '_' : ''}`}
                       onClick={() => {
-                        if (canChangeRole(user.role, context.role, user.is_you)) {
+                        if (canChangeRole(user.role, role, user.is_you)) {
                           if (showChoiceRole === 0) setShowChoiceRole(user.id);
                           else setShowChoiceRole(0);
                         }
@@ -165,7 +167,7 @@ function Users() {
                     >
                       <div style={{ color: '#7D7D7D' }}>{roles[user.role]}</div>
 
-                      {canChangeRole(user.role, context.role, user.is_you) && <img src="/users/open.svg" className="open_role" />}
+                      {canChangeRole(user.role, role, user.is_you) && <img src="/users/open.svg" className="open_role" />}
                     </div>
                     {showChoiceRole === user.id && (
                       <div className="users_list_item-dropdown-options">
@@ -196,9 +198,7 @@ function Users() {
                       </div>
                     )}
                   </div>
-                  {canChangeRole(user.role, context.role, user.is_you) && (
-                    <img className="kick_user" src="/users/kick.svg" onClick={() => setShowDelete(user.id)} />
-                  )}
+                  {canChangeRole(user.role, role, user.is_you) && <img className="kick_user" src="/users/kick.svg" onClick={() => setShowDelete(user.id)} />}
                 </div>
                 <div className="users_list_list_line"></div>
               </div>

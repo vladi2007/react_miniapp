@@ -19,7 +19,7 @@ export interface PatchOrgPayload {
   organization_description: string | undefined;
   organization_name: string;
 }
-export type UserRole = 'admin' | 'leader' | 'organizer';
+export type UserRole = 'admin' | 'leader' | 'organizer' | 'participant';
 export type UserRoleToAdd = 'admin' | 'leader';
 export type UsersFilter = 'admin' | 'leader' | 'all';
 export interface OrganizationParticipant {

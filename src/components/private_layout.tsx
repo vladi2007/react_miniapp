@@ -1,19 +1,19 @@
 import { Outlet } from 'react-router';
-import { useUserContext } from '../App';
 import Header from './header';
 import Layout from './layout';
 import Navigation from './navigation';
 import type { UserContext } from '../types/user';
 import { useName } from '../hooks/useUser';
+import { useTelegramUser } from '../store';
 function PrivateLayout() {
-  const context = useUserContext();
-  const { data: nameData, isLoading: nameLoading } = useName(context?.user);
+  const user = useTelegramUser();
+  const { data: nameData, isLoading: nameLoading } = useName(user);
   if (nameLoading) return;
   return (
     <Layout>
-      <Header user={context.user} orgName={nameData} />
+      <Header orgName={nameData} />
       <Navigation />
-      <Outlet context={{ user: context.user, role: context.role, orgName: nameData } satisfies UserContext} />
+      <Outlet context={{ orgName: nameData } satisfies UserContext} />
     </Layout>
   );
 }
