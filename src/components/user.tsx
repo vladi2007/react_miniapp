@@ -20,11 +20,12 @@ function User() {
   } = useForm({ resolver: yupResolver(organizationUserName), mode: 'all', shouldFocusError: true });
 
   useEffect(() => {
-    if (user)
+    if (context.orgName?.name) {
       reset({
-        name: context.orgName?.name,
+        name: context.orgName.name,
       });
-  }, [user]);
+    }
+  }, [context.orgName?.name, reset]);
   const handleSave = (data: OrganizationUserNameSchema) => {
     if (!user) return;
     patchNameMutation.mutate({
